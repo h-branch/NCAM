@@ -13,18 +13,16 @@ hail=ds.variables['Ensemble_Hail_probability(%)'][:]
 lats=ds.variables['Latitude'][:]
 lons=ds.variables['Longitude'][:]
 
-if lats.ndim == 2 and lons.ndim == 2:
-    lat0=lats[0,0]
-    lon0=lons[0,0]
-    dlat=lats[1,0]-lats[0,0]
-    dlon=lons[0,1]-lons[0,0]
-else:
-    raise ValueError("lat/lon 값이 예상과 다름")
+lat0=np.max(lats)
+lon0=np.min(lons)
+dlon=np.mean(np.diff(lons[0,:]))
+dlat=np.mean(np.diff(lats[:,0]))
+transform=from_origin(lon0, lat0, dlon, abs(dlat))
 
-transform=from_origin(lon0, lat0 + dlat * hail.shape[0], dlon, -dlat)
+flip=np.flipud(hail)
 
 with rasterio.open(
-    'D:/lhj/과업(연구과제)/hail/1. gis/grid/hail.tif',
+    'D:/lhj/과업(연구과제)/hail/1. gis/hail5.tif',
     'w',
     driver='GTiff',
     height=hail.shape[0],
@@ -34,4 +32,4 @@ with rasterio.open(
     crs='EPSG:4326',
     transform=transform
 ) as dst:
-    dst.write(hail, 1)
+    dst.write(flip, 1)
