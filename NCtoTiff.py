@@ -13,8 +13,6 @@ print("Latitude min/max:", np.min(lats), np.max(lats))
 print("Longitude min/max:", np.min(lons), np.max(lons))
 
 hail = ds.variables['Ensemble_Hail_probability(%)'][:]
-lats = ds.variables['Latitude'][:]
-lons = ds.variables['Longitude'][:]
 
 min_lon = np.min(lons)
 max_lon = np.max(lons)
