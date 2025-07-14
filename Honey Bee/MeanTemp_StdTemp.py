@@ -12,7 +12,7 @@ import scipy.stats as stats
 
 
 # 데이터 불러오기
-df=pd.read_csv("/content/drive/MyDrive/1997_2023_AWS_영암_일평균.csv", encoding='euc-kr')
+df=pd.read_csv("/content/drive/MyDrive/1997_2023_AWS_영암_일평균.csv", encoding='euckr')
 # '일시' 열을 datetime 형식으로 변환
 df['일시']=pd.to_datetime(df['일시'])
 # 0월 데이터만 필터링
